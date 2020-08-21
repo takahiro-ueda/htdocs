@@ -15,7 +15,14 @@ print($time . ("\n"));
 // print($ieyasu);
 
 //明後日の表示
-$day_after_tomorrow = strtotime('+2day');
-$day = date('n/j(D)', $day_after_tomorrow);
-print($day . "\n");
+// $day_after_tomorrow = strtotime('+2day');
+// $day = date('n/j(D)', $day_after_tomorrow);
+// print($day . "\n");
+
+//繰り返し構文でstrtotimeファンクションを利用
+for ($i=1; $i<=365; $i++) {
+  $timestamp = strtotime('+' . $i . 'day');
+  $day = date('n/j(D)' , $timestamp);
+  print($day ."\n");
+}
 ?>
