@@ -20,9 +20,13 @@ print($time . ("\n"));
 // print($day . "\n");
 
 //繰り返し構文でstrtotimeファンクションを利用
-for ($i=1; $i<=365; $i++) {
-  $timestamp = strtotime('+' . $i . 'day');
-  $day = date('n/j(D)' , $timestamp);
-  print($day ."\n");
-}
+// for ($i=1; $i<=365; $i++) {
+//   $timestamp = strtotime('+' . $i . 'day');
+//   $day = date('n/j(D)' , $timestamp);
+//   print($day ."\n");
+// }
+
+//パラメーターにファンクションを指定
+$timestamp = strtotime('+' . $i . 'day');
+$day = date('n/j(D)' , $timestamp);
 ?>
