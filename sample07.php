@@ -16,5 +16,6 @@ print($time . ("\n"));
 
 //明後日の表示
 $day_after_tomorrow = strtotime('+2day');
-print($day_after_tomorrow);
+$day = date('n/j(D)', $day_after_tomorrow);
+print($day . "\n");
 ?>
