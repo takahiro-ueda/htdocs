@@ -29,4 +29,13 @@ print($time . ("\n"));
 //パラメーターにファンクションを指定
 $timestamp = strtotime('+' . $i . 'day');
 $day = date('n/j(D)' , $timestamp);
+
+//練習問題
+$i =1;
+while ($i<=365) {
+  $timestamp = strtotime('+' . $i . 'day');
+  $day = date('n/j(D)' , $timestamp);
+  print($day . "\n");
+  $i++;
+}
 ?>
