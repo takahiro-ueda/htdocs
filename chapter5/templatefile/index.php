@@ -25,8 +25,15 @@ try {
   echo 'DB接続エラー：　' . $e->getMessage();
 }
 
-$count = $db->exec('INSERT INTO my_items SET maker_id=1, item_name="もも", price=210, keyword="缶詰,ピンク,甘い", sales=0, created="2020-09-02", modified="2020-09-02"');
-echo $count . '件のデータを挿入しました';
+// mysqlにデータ挿入
+// $count = $db->exec('INSERT INTO my_items SET maker_id=1, item_name="もも", price=210, keyword="缶詰,ピンク,甘い", sales=0, created="2020-09-02", modified="2020-09-02"');
+// echo $count . '件のデータを挿入しました';
+
+//「SELECT」文を用いて取得
+$records = $db->query('SELECT * FROM my_items');
+while ($record = $records->fetch()) {
+  print($record['item_name'] . "\n");
+}
 ?>
 </pre>
 </main>
