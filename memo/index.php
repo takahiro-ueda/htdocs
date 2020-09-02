@@ -36,10 +36,20 @@ try {
 // }
 
 //countなどで計算
-$records = $db->query('SELECT COUNT(*) AS record_count FROM my_items'); //コードを正規表記でASを活用（別名を付ける）
-$record = $records->fetch();
-print('件数は、' . $record['record_count'] . '件数です！');
+// $records = $db->query('SELECT COUNT(*) AS record_count FROM my_items'); //コードを正規表記でASを活用（別名を付ける）
+// $record = $records->fetch();
+// print('件数は、' . $record['record_count'] . '件数です！');
+
+//「SELECT」構文を利用してDBからメモのデータを取得
+$memos = $db->query('SELECT * FROM memos ORDER BY id DESC');
 ?>
+<article>
+<?php while ( $memo = $memos->fetch()): ?>
+  <p><a href="#"><?php print($memo['memo']); ?></a></p>
+  <time><?php print($memo['created_at']); ?></time>
+  <hr>
+<?php endwhile; ?>
+</article>
 </pre>
 </main>
 </body>
