@@ -30,10 +30,15 @@ try {
 // echo $count . '件のデータを挿入しました';
 
 //「SELECT」文を用いて取得
-$records = $db->query('SELECT * FROM my_items');
-while ($record = $records->fetch()) {
-  print($record['item_name'] . "\n");
-}
+// $records = $db->query('SELECT * FROM my_items');
+// while ($record = $records->fetch()) { //[fetch]メソッドを用いることで$recordsという変数から1行のレコードを取得して[$record]変数に代入
+//   print($record['item_name'] . "\n"); //[$record]変数はさらに連装配列として各カラムの内容を取り出すことが可能！
+// }
+
+//countなどで計算
+$records = $db->query('SELECT COUNT(*) AS record_count FROM my_items'); //コードを正規表記でASを活用（別名を付ける）
+$record = $records->fetch();
+print('件数は、' . $record['record_count'] . '件数です！');
 ?>
 </pre>
 </main>
