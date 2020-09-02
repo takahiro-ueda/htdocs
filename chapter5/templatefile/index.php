@@ -19,6 +19,13 @@
 <pre>
 <?php
 /* ここに、PHPのプログラムを記述します　*/
+try {
+  $db = new PDO('mysql:dbname=mybd;host=127.0.0.1;charset=ytf8',
+  'root',
+  'root');
+} catch (PDOException $e) {
+  echo 'DB接続エラー：　' . $e->getMessage();
+}
 ?>
 </pre>
 </main>
