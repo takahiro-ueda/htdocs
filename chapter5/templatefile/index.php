@@ -20,12 +20,13 @@
 <?php
 /* ここに、PHPのプログラムを記述します　*/
 try {
-  $db = new PDO('mysql:dbname=mybd;host=127.0.0.1;charset=ytf8',
-  'root',
-  'root');
+  $db = new PDO('mysql:dbname=mydb;host=localhost;charset=utf8', 'root', 'root');
 } catch (PDOException $e) {
   echo 'DB接続エラー：　' . $e->getMessage();
 }
+
+$count = $db->exec('INSERT INTO my_items SET maker_id=1, item_name="もも", price=210, keyword="缶詰,ピンク,甘い", sales=0, created="2020-09-02", modified="2020-09-02"');
+echo $count . '件のデータを挿入しました';
 ?>
 </pre>
 </main>
