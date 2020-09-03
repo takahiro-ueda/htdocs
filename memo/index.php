@@ -34,7 +34,12 @@
 // $record = $records->fetch();
 // print('件数は、' . $record['record_count'] . '件数です！');
 
-$page = $_REQUEST['page'];
+//issetは、変数やパラメーターが「存在しているか」を検査するためのファンクション、is_numericファンクションは数字かどうかの検査
+if (isset($_REQUEST['page']) && is_numeric($_REQUEST['page'])) {
+  $page = $_REQUEST['page'];
+} else {
+  $page = 1;
+}
 $start = 5 * ($page - 1);
 
 //「SELECT」構文を利用してDBからメモのデータを取得
