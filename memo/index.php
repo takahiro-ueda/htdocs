@@ -34,11 +34,15 @@
 // $record = $records->fetch();
 // print('件数は、' . $record['record_count'] . '件数です！');
 
+$page = $_REQUEST['page'];
+$start = 5 * ($page - 1);
+
 //「SELECT」構文を利用してDBからメモのデータを取得
 $memos = $db->prepare('SELECT * FROM memos ORDER BY id LIMIT 0,5'); //スタート位置と件数をカンマで区切って指定。
+
 //bindParamメソッドでパラメーターを割当
-//３つのパラメーターを指定しないとLIMIT句は文字列として渡されてしまい、正しく動作しないので注意
-$memos->bindParam(1, $_REQUEST['page'], PDO::PARAM_INT); 
+//３つのパラメーターを指定しないとLIMIT句は文字列として渡されてしまい、正しく動作しないので注意⤵︎
+$memos->bindParam(1, $start, PDO::PARAM_INT); 
 $memos->execute();
 ?>
 <article>
