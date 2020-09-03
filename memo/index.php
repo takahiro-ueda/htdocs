@@ -45,7 +45,12 @@ $memos = $db->query('SELECT * FROM memos ORDER BY id DESC');
 ?>
 <article>
 <?php while ( $memo = $memos->fetch()): ?>
-  <p><a href="memo.php?id=<?php print($memo['id']); ?>"><?php print(mb_substr($memo['memo'], 0, 50));//「mb_substr」で文字列を切り取る一覧に表示される文字数は制限　0は先頭を意味、50は先頭から数えての文字数?></a></p>
+  <p>
+    <a href="memo.php?id=<?php print($memo['id']); ?>">
+      <?php print(mb_substr($memo['memo'], 0, 50));//「mb_substr」で文字列を切り取る一覧に表示される文字数は制限　0は先頭を意味、50は先頭から数えての文字数?>
+      <?php print((mb_strlen($memo['memo']) > 50 ? '...' : '')); ?>
+    </a>
+  </p>
   <time><?php print($memo['created_at']); ?></time>
   <hr>
 <?php endwhile; ?>
