@@ -1,22 +1,3 @@
-<!-- <!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
-<link rel="stylesheet" href="css/style.css">
-
-<title>よくわかるPHPの教科書</title>
-</head>
-<body>
-<header>
-<h1 class="font-weight-normal">よくわかるPHPの教科書</h1>
-</header>
-
-<main>
-<h2>Practice</h2>
-<pre> -->
 <?php
 session_start();
 
@@ -55,7 +36,32 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     exit();
   }
 }
+
+//書き直し
+// if ($_REQUEST['action'] == 'rewrite') { //
+//   $_POST = $_SESSION['join'];
+//   $error['rewrite'] = true;
+// }
 ?>
+<!-- <!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<link rel="stylesheet" href="css/style.css">
+
+<title>よくわかるPHPの教科書</title>
+</head>
+<body>
+<header>
+<h1 class="font-weight-normal">よくわかるPHPの教科書</h1>
+</header>
+
+<main>
+<h2>Practice</h2>
+<pre> -->
 <p>次のフォームに必要事項をご記入ください。</p>
 <!-- action属性が空。これは自分自身に送信するという意味 / ファイルの送信フォームがある場合は「enctype="multipart/form-data"」属性を必ず指定 -->
 <form action="" method="post" enctype="multipart/form-data">
@@ -65,31 +71,31 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     <!-- //「htmlspecialchars」ファンクションにかけてから表示をしないと、入力された文字によっては画面が壊れてしまったりする -->
       <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['name'], ENT_QUOTES); ?>" />
       <!-- //「$error」配列のキーが「name」の内容を確認、空の場合はエラーメッセージを表示 -->
-      <?php if ($error['name'] == 'blank'): ?>  
+      <?php if (isset($error['name']) && $error['name'] == 'blank'): ?> 
         <p class="error">* ニックネームを入力してください</p>
       <?php endif; ?>
     </dd>
     <dt>メールアドレス<span class="required">必須</span></dt>
     <dd>
       <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>" />
-      <?php if ($error['email'] == 'blank'): ?>
+      <?php if (@$error['email'] == 'blank'): ?>
         <p class="error">* メールアドレスを入力してください！</p>
       <?php endif; ?>
     </dd>
     <dt>パスワード<span class="required">必須</span></dt>
     <dd>
       <input type="password" name="password" size="10" maxlength="20" value="<?php echo htmlspecialchars($_POST['password'], ENT_QUOTES); ?>" />
-      <?php if ($error['password'] == 'blank'): ?>
+      <?php if (@$error['password'] == 'blank'): ?>
         <p class="error">* パスワードを入力してください！</p>
       <?php endif; ?>
-      <?php if ($error['password'] == 'length'): ?>
+      <?php if (@$error['password'] == 'length'): ?>
         <p class="error">* パスワードは4文字以上で入力してください</p>
       <?php endif; ?>
     </dd>
     <dt>写真など</dt>
     <dd>
       <input type="file" name="image" size="35" />
-      <?php if ($error['image'] == 'type'): //ファイルの形式が正しくない場合に表示されるエラーメッセージ?>
+      <?php if (@$error['image'] == 'type'): //ファイルの形式が正しくない場合に表示されるエラーメッセージ?>
         <p class="error">* 写真などは「.gif」または「.jpg」の画像を指定してください</p>
       <?php endif; ?>
       <?php if (!empty($error)): //?>
