@@ -71,7 +71,7 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     <!-- //「htmlspecialchars」ファンクションにかけてから表示をしないと、入力された文字によっては画面が壊れてしまったりする -->
       <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['name'], ENT_QUOTES); ?>" />
       <!-- //「$error」配列のキーが「name」の内容を確認、空の場合はエラーメッセージを表示 -->
-      <?php if (isset($error['name']) && $error['name'] == 'blank'): ?> 
+      <?php if (@$error['name'] == 'blank'): ?> 
         <p class="error">* ニックネームを入力してください</p>
       <?php endif; ?>
     </dd>
