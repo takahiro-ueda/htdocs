@@ -38,10 +38,10 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
 }
 
 //書き直し
-// if ($_REQUEST['action'] == 'rewrite') { //
-//   $_POST = $_SESSION['join'];
-//   $error['rewrite'] = true;
-// }
+if (@$_REQUEST['action'] == 'rewrite') { //
+  $_POST = $_SESSION['join'];
+  $error['rewrite'] = true;
+}
 ?>
 <!doctype html>
 <html lang="ja">
