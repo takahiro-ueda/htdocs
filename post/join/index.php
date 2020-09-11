@@ -38,7 +38,7 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
 }
 
 //書き直し
-if (@$_REQUEST['action'] == 'rewrite') { //
+if (@$_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」が「rewrite」という内容だった場合、つまりURLに「index.php?action=rewrite」と指定された場合というif構文
   $_POST = $_SESSION['join'];
   $error['rewrite'] = true;
 }
