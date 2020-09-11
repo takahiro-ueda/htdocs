@@ -43,25 +43,25 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
 //   $error['rewrite'] = true;
 // }
 ?>
-<!-- <!doctype html>
+<!doctype html>
 <html lang="ja">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<!-- <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 
 <link rel="stylesheet" href="css/style.css">
 
-<title>よくわかるPHPの教科書</title>
+<title>会員登録</title>
 </head>
 <body>
 <header>
-<h1 class="font-weight-normal">よくわかるPHPの教科書</h1>
+<h1>会員登録</h1>
 </header>
 
 <main>
-<h2>Practice</h2>
-<pre> -->
+<!-- <h2>Practice</h2> -->
 <p>次のフォームに必要事項をご記入ください。</p>
 <!-- action属性が空。これは自分自身に送信するという意味 / ファイルの送信フォームがある場合は「enctype="multipart/form-data"」属性を必ず指定 -->
 <form action="" method="post" enctype="multipart/form-data">
@@ -69,7 +69,7 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     <dt>ニックネーム<span class="required">必須</span></dt>
     <dd>
     <!-- //「htmlspecialchars」ファンクションにかけてから表示をしないと、入力された文字によっては画面が壊れてしまったりする -->
-      <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['name'], ENT_QUOTES); ?>" />
+      <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['name'], ENT_QUOTES, 'UTF-8'); ?>" />
       <!-- //「$error」配列のキーが「name」の内容を確認、空の場合はエラーメッセージを表示 -->
       <?php if (@$error['name'] == 'blank'): ?> 
         <p class="error">* ニックネームを入力してください</p>
@@ -77,14 +77,14 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     </dd>
     <dt>メールアドレス<span class="required">必須</span></dt>
     <dd>
-      <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>" />
+      <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['email'], ENT_QUOTES); ?>" />
       <?php if (@$error['email'] == 'blank'): ?>
         <p class="error">* メールアドレスを入力してください！</p>
       <?php endif; ?>
     </dd>
     <dt>パスワード<span class="required">必須</span></dt>
     <dd>
-      <input type="password" name="password" size="10" maxlength="20" value="<?php echo htmlspecialchars($_POST['password'], ENT_QUOTES); ?>" />
+      <input type="password" name="password" size="10" maxlength="20" value="<?php echo htmlspecialchars(@$_POST['password'], ENT_QUOTES); ?>" />
       <?php if (@$error['password'] == 'blank'): ?>
         <p class="error">* パスワードを入力してください！</p>
       <?php endif; ?>
@@ -105,7 +105,6 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
   </dl>
   <div><input type="submit" value="入力内容を確認する！" /></div>
 </form>
-<!-- </pre>
 </main>
 </body>
-</html> -->
+</html>
