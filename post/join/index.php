@@ -46,12 +46,9 @@ if (@$_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」�
 <!doctype html>
 <html lang="ja">
 <head>
-<!-- <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" type="text/css">
 
 <title>会員登録</title>
 </head>
@@ -69,7 +66,7 @@ if (@$_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」�
     <dt>ニックネーム<span class="required">必須</span></dt>
     <dd>
     <!-- //「htmlspecialchars」ファンクションにかけてから表示をしないと、入力された文字によっては画面が壊れてしまったりする -->
-      <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['name'], ENT_QUOTES, 'UTF-8'); ?>" />
+      <input type="text" name="name" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['name'], ENT_QUOTES); ?>" />
       <!-- //「$error」配列のキーが「name」の内容を確認、空の場合はエラーメッセージを表示 -->
       <?php if (@$error['name'] == 'blank'): ?> 
         <p class="error">* ニックネームを入力してください</p>
