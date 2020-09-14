@@ -1,6 +1,6 @@
 <?php
 session_start();
-require('/Applications/MAMP/htdocs/post/dbconnect.php'); //dbconnect.phpを呼び出している
+// require('../dbconnect.php'); //dbconnect.phpを呼び出している
 
 if (!isset($_SESSION['join'])) { //入力したセッションに記録しておき、「$_SESSION['join']」に何も含まれていない場合はcheck.php。
   header('Location: index.php');
