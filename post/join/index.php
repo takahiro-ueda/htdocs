@@ -39,15 +39,16 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
 }
 
 //書き直し
-if ($_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」が「rewrite」という内容だった場合、つまりURLに「index.php?action=rewrite」と指定された場合というif構文
+if (@$_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」が「rewrite」という内容だった場合、つまりURLに「index.php?action=rewrite」と指定された場合というif構文
   $_POST = $_SESSION['join'];
   $error['rewrite'] = true;
 }
 ?>
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" type="text/css" />
 
 <title>会員登録</title>
