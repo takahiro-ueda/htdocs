@@ -1,14 +1,14 @@
 <?php
-require('../dbconnect.php');
+require('../dbconnect.php'); //DBへの接続が必要のため記入([require]ファンクションで参照)
 session_start();
 
-if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示」と「チェック」で兼用のため切り分けが必要。これを「$_POST」がからでないかを確認
+if (!isset($_POST)) { //今回はプログラムでは入力画面を「表示」と「チェック」で兼用のため切り分けが必要。これを「$_POST」がからでないかを確認
   // エラー項目の確認
   // 「!empty($_POST)」の戻り値がtrueである場合（＝フォームが送信されている場合）は内容をチェック
-  if ($_POST['name'] == '') {
+  if ($_POST['name'] === '') {
     $error['name'] = 'blank';
   }
-  if ($_POST['email'] == '') {
+  if ($_POST['email'] === '') {
     $error['email'] = 'blank';
   }
   //パスワードの文字数も「strlen」ファンクションで確認。今回は4文字以下
@@ -16,18 +16,28 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     $error['password'] = 'length';
   }
   //「$_FILES」は連想配列となっており、ファイル名や一時的にアップロードされたファイル名などが代入されています
-  if ($_POST['password'] == '') {
+  if ($_POST['password'] === '') {
     $error['password'] = 'blank';
   }
   $fileName = $_FILES['image']['name'];
-  if (!empty($fileName)) {
+  if (!isset($fileName)) {
     $ext = substr($fileName, -3);
-    if ($ext != 'jpg' && $ext != 'gif') {
+    if ($ext != 'jpg' && $ext != 'gif' && $ext !='jpeg' && $ext !='png') {
       $error['image'] = 'type';
     }
   }
+  //重複アカウントのチェック　重複を確認するのは「members」テーブルから、入力されたメールアドレスのレコードが保存されているかどうかで確認
+  if (empty($error)) {
+    $member = $db->prepare('SELECT COUNT(*) AS cnt FROM members WHERE email=?');
+    $member->execute(array($_POST['email']));
+    $record = $member->fetch();
+    if ($record['cnt'] > 0) {
+      $error['email'] = 'duplicate';
+    }
+  }
+
   //全ての確認が終了すれば「$error」配列がからであるか判定。/ 「header」ファンクションで次の画面に移動
-  if (empty($error)) {  
+  if (!isset($error)) {  
     // 画像をアップロードする
     $image = date('YmdHis') . $_FILES['image']['name'];
     move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/' . $image);
@@ -78,6 +88,9 @@ if (@$_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」�
       <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['email'], ENT_QUOTES); ?>" />
       <?php if (isset($error['email']) && $error['email'] == 'blank'): ?>
         <p class="error">* メールアドレスを入力してください！</p>
+      <?php endif; ?>
+      <?php if (@$error['email'] == 'duplicate'): ?>
+        <p class="error">* 指定されたメールアドレスは既に登録されています！！！</p>
       <?php endif; ?>
     </dd>
     <dt>パスワード<span class="required">必須</span></dt>
