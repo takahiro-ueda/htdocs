@@ -2,7 +2,7 @@
 require('../dbconnect.php'); //DBへの接続が必要のため記入([require]ファンクションで参照)
 session_start();
 
-if (!isset($_POST)) { //今回はプログラムでは入力画面を「表示」と「チェック」で兼用のため切り分けが必要。これを「$_POST」がからでないかを確認
+if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示」と「チェック」で兼用のため切り分けが必要。これを「$_POST」がからでないかを確認
   // エラー項目の確認
   // 「!empty($_POST)」の戻り値がtrueである場合（＝フォームが送信されている場合）は内容をチェック
   if ($_POST['name'] === '') {
@@ -11,8 +11,8 @@ if (!isset($_POST)) { //今回はプログラムでは入力画面を「表示�
   if ($_POST['email'] === '') {
     $error['email'] = 'blank';
   }
-  //パスワードの文字数も「strlen」ファンクションで確認。今回は4文字以下
-  if (strlen($_POST['password']) < 4) { 
+  //パスワードの文字数も「strlen」ファンクションで確認。今回は6文字以下
+  if (strlen($_POST['password']) < 6) { 
     $error['password'] = 'length';
   }
   //「$_FILES」は連想配列となっており、ファイル名や一時的にアップロードされたファイル名などが代入されています
@@ -39,10 +39,10 @@ if (!isset($_POST)) { //今回はプログラムでは入力画面を「表示�
   //全ての確認が終了すれば「$error」配列がからであるか判定。/ 「header」ファンクションで次の画面に移動
   if (!isset($error)) {  
     // 画像をアップロードする
-    $image = date('YmdHis') . $_FILES['image']['name'];
-    move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/' . $image);
+    // $image = date('YmdHis') . $_FILES['image']['name'];
+    // move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/' . $image);
     $_SESSON['join'] = $_POST;
-    $_SESSON['join']['image'] = $image;
+    // $_SESSON['join']['image'] = $image;
     header('Location: check.php');
     exit();
   }
@@ -100,7 +100,7 @@ if (@$_REQUEST['action'] == 'rewrite') { //URLパラメーターの「action」�
         <p class="error">* パスワードを入力してください！</p>
       <?php endif; ?>
       <?php if (isset($error['password']) && $error['password'] == 'length'): ?>
-        <p class="error">* パスワードは4文字以上で入力してください</p>
+        <p class="error">* パスワードは6文字以上で入力してください</p>
       <?php endif; ?>
     </dd>
     <dt>写真など</dt>
