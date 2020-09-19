@@ -1,3 +1,32 @@
+<?php
+require('dbconnect.php');
+
+session_start();
+
+if (!empty($_POST)) { //ログインボタンがクリックされているか確認
+  //ログインの処理
+  if ($_POST['email'] != '' && $_POST['password'] != '') { //「email」「password」の両方のフィールドが記入されているか確認
+    $login = $db->prepare('SELECT * FROM members WHERE email=? AND password=?'); //DBから記入されたメールアドレス及びパスワードのデータを検索
+    $login->execute(array(
+      $_POST['email'],
+      shal($_POST['password'])
+    ));
+  $member = $login->fetch();
+
+    if ($member) { //トップページへ移動
+      //ログイン成功
+      $_SESSION['id'] = $member['id'];
+      $_SESSION['time'] = time();
+
+      header('Location: index.php'); exit();
+    } else {
+      $error['login'] = 'failed';
+    }
+  } else {
+    $error['login'] = 'blank'; //「email」「password」のどちらかが記入されていない場合のエラー
+  }
+}
+?>
 <div id="lead">
   <p>メールアドレスとパスワードを記入してログインしてください。</p>
   <p>入会手続きがまだの方はこちらからどうぞ。</p>
@@ -7,11 +36,17 @@
   <dl>
     <dt>メールアドレス</dt>
     <dd>
-      <input type="text" name="email" size="35" maxlength="255" />
+      <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>" />
+      <?php if ($error['login'] == 'blank'): ?>
+      <p class="error">* メールアドレスとパスワードをご記入してください。</p>
+      <?php endif; ?>
+      <?php if ($error['login'] == 'failed'): ?>
+      <p class="error">* ログインに失敗しました。正しくご記入してください。</p>
+      <?php endif; ?>
     </dd>
     <dt>パスワード</dt>
     <dd>
-      <input type="password" name="password" size="35" maxlength="255" />
+      <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['password'], ENT_QUOTES); ?>" />
     </dd>
     <dt>ログイン情報の記録</dt>
     <dd>
