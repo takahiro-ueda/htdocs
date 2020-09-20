@@ -14,15 +14,19 @@ if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) { //ログイ�
   header('Location: login.php'); exit();
 }
 //投稿を記録する
-if (!empty($_POST)) {
-  if ($_POST['message'] != '') {
-    $message = $db->prepare('INSERT INTO posts SET member_id=?, message=?, created=NOW()');
-    $message->execute(array(
-      $member['id'],
-      $_POST['message']
-    ));
-  }
-}
+// if (!empty($_POST)) {
+//   if ($_POST['message'] != '') {
+//     $message = $db->prepare('INSERT INTO posts SET member_id=?, message=?, created=NOW()');
+//     $message->execute(array(
+//       $member['id'],
+//       $_POST['message']
+//     ));
+//   }
+// }
+
+//投稿を取得
+$posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC');
+//メッセージの情報を取り出す
 
 ?>
 <!DOCTYPE html>
@@ -53,11 +57,17 @@ if (!empty($_POST)) {
     </p>
   </div>
 </form>
+<?php
+foreach ($posts as $post);
+?>
 <div class="msg">
-  <img src="member_picture/me.jpg" width="48" height="48" alt="makoto" />
-  <p>こんにちは<span class="name">（makoto）</span></p>
-  <p class="day">2020/09/18 13:00</p>
+  <img src="member_picture/<?php echo htmlspecialchars($post['picture'],ENT_QUOTES); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES; ?>" />
+  <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES); ?><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES）; ?></span></p>
+  <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?></p>
 </div>
+<?php
+endforeach;
+?>
 </main>
 </body>
 </html>
