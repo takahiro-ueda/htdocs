@@ -3,7 +3,7 @@ require('dbconnect.php');
 
 session_start();
 
-if ($_COOKIE['email'] != '') { //
+if (@$_COOKIE['email'] != '') { //
   $_POST['email'] = $_COOKIE['email'];
   $_POST['password'] = $_COOKIE['password'];
   $_POST['save'] = 'on';
@@ -48,17 +48,17 @@ if (!empty($_POST)) { //ログインボタンがクリックされているか�
   <dl>
     <dt>メールアドレス</dt>
     <dd>
-      <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['email'], ENT_QUOTES); ?>" />
-      <?php if ($error['login'] == 'blank'): ?>
+      <input type="text" name="email" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['email'], ENT_QUOTES); ?>" />
+      <?php if (@$error['login'] == 'blank'): ?>
       <p class="error">* メールアドレスとパスワードをご記入してください。</p>
       <?php endif; ?>
-      <?php if ($error['login'] == 'failed'): ?>
+      <?php if (@$error['login'] == 'failed'): ?>
       <p class="error">* ログインに失敗しました。正しくご記入してください。</p>
       <?php endif; ?>
     </dd>
     <dt>パスワード</dt>
     <dd>
-      <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars($_POST['password'], ENT_QUOTES); ?>" />
+      <input type="password" name="password" size="35" maxlength="255" value="<?php echo htmlspecialchars(@$_POST['password'], ENT_QUOTES); ?>" />
     </dd>
     <dt>ログイン情報の記録</dt>
     <dd>
