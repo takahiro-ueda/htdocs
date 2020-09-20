@@ -28,6 +28,14 @@ if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) { //ログイ�
 $posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC');
 //メッセージの情報を取り出す
 
+//返信の場合 [@]というのは、誰かのメッセージに対しての返事を意味する記号で、この記号の前に返信メッセージを入力してもらう
+if (isset($_REQUEST['res'])) {
+  $response = $db->prepare('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id AND p.id=? ORDER BY p.created DESC');
+
+  $table = $response->fetch();
+  $message = '@' . $table['name'] . ' ' . $table['message'];
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -48,7 +56,8 @@ $posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE
   <dl>
     <dt><?php echo htmlspecialchars($member['name'], ENT_QUOTES); ?>さん、メッセージをどうぞ</dt>
     <dd>
-      <textarea name="message" cols="50" rows="5"></textarea>
+      <textarea name="message" cols="50" rows="5"><?php echo htmlspecialchars($message, ENT_QUOTES); ?></textarea>
+      <input type="hidden" name="reply_post_id" value="<?php echo htmlspecialchars($_REQUEST['res'], ENT_QUOTES); ?>" />
     </dd>
   </dl>
   <div>
