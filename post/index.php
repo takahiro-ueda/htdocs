@@ -62,7 +62,11 @@ foreach ($posts as $post):
 ?>
   <div class="msg">
     <img src="member_picture/<?php echo htmlspecialchars($post['picture'], ENT_QUOTES); ?>" width="48" height="48" alt="<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>" />
-    <p><?php echo htmlspecialchars($post['message'], ENT_QUOTES); ?><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>）</span></p>
+    <p>
+      <?php echo htmlspecialchars($post['message'], ENT_QUOTES); ?><span class="name">（<?php echo htmlspecialchars($post['name'], ENT_QUOTES); ?>）</span>
+      [<a href="index.php?res=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">Re</a>]
+      <!-- Reと書いた文字にリンクを張る。 -->
+    </p>
     <p class="day"><?php echo htmlspecialchars($post['created'], ENT_QUOTES); ?></p>
   </div>
 <?php
