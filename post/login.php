@@ -3,6 +3,12 @@ require('dbconnect.php');
 
 session_start();
 
+if ($_COOKIE['email'] != '') { //
+  $_POST['email'] = $_COOKIE['email'];
+  $_POST['password'] = $_COOKIE['password'];
+  $_POST['save'] = 'on';
+}
+
 if (!empty($_POST)) { //ログインボタンがクリックされているか確認
   //ログインの処理
   if ($_POST['email'] != '' && $_POST['password'] != '') { //「email」「password」の両方のフィールドが記入されているか確認
@@ -17,6 +23,12 @@ if (!empty($_POST)) { //ログインボタンがクリックされているか�
       //ログイン成功
       $_SESSION['id'] = $member['id'];
       $_SESSION['time'] = time();
+
+      //ログイン情報を記録する
+      if ($_POST['save'] == 'on') { //ログイン成功で情報をcookieに保存
+        setcookie('email', $_POST['email'], time()+60*60*24*14);  //最後の数式は秒・時間を表し、14日間の保存期間を設定
+        setcookie('password', $_POST['password'], time()+60*60*24*14);
+      }
 
       header('Location: index.php'); exit();
     } else {
