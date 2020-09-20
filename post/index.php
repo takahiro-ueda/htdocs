@@ -48,9 +48,16 @@ if (!empty($_POST)) {
     </dd>
   </dl>
   <div>
-    <input type="submit" value="投稿する" />
+    <p>
+      <input type="submit" value="投稿する" />
+    </p>
   </div>
 </form>
+<div class="msg">
+  <img src="member_picture/me.jpg" width="48" height="48" alt="makoto" />
+  <p>こんにちは<span class="name">（makoto）</span></p>
+  <p class="day">2020/09/18 13:00</p>
+</div>
 </main>
 </body>
 </html>
