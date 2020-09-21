@@ -43,6 +43,12 @@ if (isset($_REQUEST['res'])) {
 function h($value) { //
   return htmlspecialchars($value, ENT_QUOTES);
 }
+
+//本文内のURLにリンクを設置
+function makeLink($value) {
+  return mb_ereg_replace("(https?)(://[[:alnum:]\+\$\;\?\.%,!#~*/:@&=_-]+)", '<a href="\1\2">\1\2</a>' , $value);
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="ja">
@@ -79,12 +85,12 @@ foreach ($posts as $post):
   <div class="msg">
     <img src="member_picture/<?php echo h($post['picture'], ENT_QUOTES); ?>" width="48" height="48" alt="<?php echo h($post['name'], ENT_QUOTES); ?>" />
     <p>
-      <?php echo h($post['message'], ENT_QUOTES); ?><span class="name">（<?php echo h($post['name'], ENT_QUOTES); ?>）</span>
+      <?php echo makeLink(h($post['message'])); ?><span class="name">（<?php echo h($post['name'], ENT_QUOTES); ?>）</span>
       [<a href="index.php?res=<?php echo h($post['id'], ENT_QUOTES); ?>">Re</a>]
       <!-- Reと書いた文字にリンクを張る。 -->
     </p>
     <p class="day">
-      <a href="view.php?id=<?php echo htmlspecialchars($post['id'], ENT_QUOTES); ?>">
+      <a href="view.php?id=<?php echo h($post['id'], ENT_QUOTES); ?>">
         <?php echo h($post['created'], ENT_QUOTES); ?>
       </a>
       <?php
