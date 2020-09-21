@@ -14,15 +14,18 @@ if (isset($_SESSION['id']) && $_SESSION['time'] + 3600 > time()) { //ログイ�
   header('Location: login.php'); exit();
 }
 //投稿を記録する
-// if (!empty($_POST)) {
-//   if ($_POST['message'] != '') {
-//     $message = $db->prepare('INSERT INTO posts SET member_id=?, message=?, created=NOW()');
-//     $message->execute(array(
-//       $member['id'],
-//       $_POST['message']
-//     ));
-//   }
-// }
+if (!empty($_POST)) {
+  if ($_POST['message'] != '') {
+    $message = $db->prepare('INSERT INTO posts SET member_id=?, message=?, reply_post_id=?, created=NOW()');
+    $message->execute(array(
+      $member['id'],
+      $_POST['message'],
+      $_POST['reply_post_id']
+    ));
+
+    header('Location: index.php'); exit();
+  }
+}
 
 //投稿を取得
 $posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC');
