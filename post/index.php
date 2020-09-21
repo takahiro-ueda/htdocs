@@ -39,6 +39,10 @@ if (isset($_REQUEST['res'])) {
   $message = '@' . $table['name'] . ' ' . $table['message'];
 }
 
+//htmlspecialcharsのショートカット
+function h($value) { //
+  return htmlspecialchars($value, ENT_QUOTES);
+}
 ?>
 <!DOCTYPE html>
 <html lang="ja">
