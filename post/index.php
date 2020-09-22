@@ -28,7 +28,23 @@ if (!empty($_POST)) {
 }
 
 //投稿を取得
-$posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC');
+$page = $_REQUEST['page']; //URLパラメータで指定された値をページ数
+if ($page == '') { //空の場合は「1」と表示
+  $page = 1;
+}
+$page = max($page, 1); //指定されたパラメータのうち大きい方を返す「max」ファンクションを使って、もしもURLパラメータにマイナス値が指定された場合には＄pageに「１」が代入
+
+//最終ページを取得 //件数を取得して最大ページ数を計算
+$counts = $db->query('SELECT COUNT(*) AS cnt FROM posts');
+$cnt = $counts->fetch();
+$maxPage = ceil($cnt['cnt'] / 5);
+$page = min($page, $maxPage); //minファンクションを使って、最大ページ数と、URLパラメータに指定されたページ数のうち、小さい方を＄pageに代入
+
+$page = ($page - 1) * 5; //1ページ目では「0」件目から、2ページ目では「5」件目から表示させるようにスタート位置を計算
+
+$posts = $db->query('SELECT m.name, m.picture, p.* FROM members m, posts p WHERE m.id=p.member_id ORDER BY p.created DESC LIMIT ?, 5'); //
+$posts->bindParam(1, $start, PDO::PARAM_INT);
+$posts->execute();
 //メッセージの情報を取り出す
 
 //返信の場合 [@]というのは、誰かのメッセージに対しての返事を意味する記号で、この記号の前に返信メッセージを入力してもらう
@@ -108,6 +124,28 @@ foreach ($posts as $post):
 <?php
 endforeach;
 ?>
+<ul class="paging">
+  <?php if ($page > 1) {
+  ?>
+  <li><a href="index.php?page=<?php print($page - 1); ?>">前のページへ</a></li>
+  <?php
+  } else {
+  ?>
+  <li>前のページへ</li>
+  <?php
+  }
+  ?>
+  <?php if ($page < $maxPage) {
+  ?>
+  <li><a href="index.php?page=<?php print($page + 1); ?>">次のページへ</a></li>
+  <?php
+  } else {
+  ?>
+  <li>次のページへ</li>
+  <?php
+  }
+  ?>
+</ul>
 </main>
 </body>
 </html>
