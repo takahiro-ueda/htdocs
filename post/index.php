@@ -81,6 +81,7 @@ function makeLink($value) {
 </header>
 
 <main>
+<div style="text-align: right"><a href="logout.php">ログアウト</a></div>
 <form action="" method="post">
   <dl>
     <dt><?php echo h($member['name'], ENT_QUOTES); ?>さん、メッセージをどうぞ</dt>
