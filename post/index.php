@@ -97,9 +97,12 @@ foreach ($posts as $post):
       if ($post['reply_post_id'] > 0):
       ?>
       <a href="view.php?id=<?php echo h($post['reply_post_id'], ENT_QUOTES); ?>">返信元のメッセージ</a>
+      <?php endif; ?>
       <?php
-      endif;
+      if ($_SESSION['id']  == $post['member_id']):
       ?>
+      [<a href="delete.php?id=<?php echo h($post['id']); ?>" style="color: #F33;">削除</a>]
+      <?php endif; ?>
     </p>
   </div>
 <?php
