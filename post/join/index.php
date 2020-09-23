@@ -27,7 +27,7 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     }
   }
   //重複アカウントのチェック　重複を確認するのは「members」テーブルから、入力されたメールアドレスのレコードが保存されているかどうかで確認
-  if (empty($error)) {
+  if (!isset($error)) {
     $member = $db->prepare('SELECT COUNT(*) AS cnt FROM members WHERE email=?');
     $member->execute(array($_POST['email']));
     $record = $member->fetch();
@@ -37,7 +37,7 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
   }
 
   //全ての確認が終了すれば「$error」配列がからであるか判定。/ 「header」ファンクションで次の画面に移動
-  if (!isset($error)) {  
+  if(empty($error)) {  
     // 画像をアップロードする
     // $image = date('YmdHis') . $_FILES['image']['name'];
     // move_uploaded_file($_FILES['image']['tmp_name'], '../member_picture/' . $image);
