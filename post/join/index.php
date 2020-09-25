@@ -5,10 +5,10 @@ session_start();
 if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示」と「チェック」で兼用のため切り分けが必要。これを「$_POST」がからでないかを確認
   // エラー項目の確認
   // 「!empty($_POST)」の戻り値がtrueである場合（＝フォームが送信されている場合）は内容をチェック
-  if ($_POST['name'] === '') {
+  if ($_POST['name'] == '') {
     $error['name'] = 'blank';
   }
-  if ($_POST['email'] === '') {
+  if ($_POST['email'] == '') {
     $error['email'] = 'blank';
   }
   //パスワードの文字数も「strlen」ファンクションで確認。今回は6文字以下
@@ -16,7 +16,7 @@ if (!empty($_POST)) { //今回はプログラムでは入力画面を「表示�
     $error['password'] = 'length';
   }
   //「$_FILES」は連想配列となっており、ファイル名や一時的にアップロードされたファイル名などが代入されています
-  if ($_POST['password'] === '') {
+  if ($_POST['password'] == '') {
     $error['password'] = 'blank';
   }
   $fileName = $_FILES['image']['name'];
@@ -83,7 +83,9 @@ function h($value) {
     <dt>ニックネーム<span class="required">必須</span></dt>
     <dd>
     <!-- //「htmlspecialchars」ファンクションにかけてから表示をしないと、入力された文字によっては画面が壊れてしまったりする -->
-      <input type="text" name="name" size="35" maxlength="255" value="<?php echo h(@$_POST['name'], ENT_QUOTES); ?>" />
+      <input type="text" name="name" size="35" maxlength="255" value="<?php if (isset($_POST['name'])) {
+        echo h($_POST['name'], ENT_QUOTES);
+       } ?>" />
       <!-- //「$error」配列のキーが「name」の内容を確認、空の場合はエラーメッセージを表示 -->
       <?php if (isset($error['name']) && $error['name'] == 'blank'): ?> 
         <p class="error">* ニックネームを入力してください</p>
@@ -91,7 +93,9 @@ function h($value) {
     </dd>
     <dt>メールアドレス<span class="required">必須</span></dt>
     <dd>
-      <input type="text" name="email" size="35" maxlength="255" value="<?php echo h(@$_POST['email'], ENT_QUOTES); ?>" />
+      <input type="text" name="email" size="35" maxlength="255" value="<?php if (isset($_POST['email'])) {
+        echo h($_POST['email'], ENT_QUOTES); 
+        } ?>" />
       <?php if (isset($error['email']) && $error['email'] == 'blank'): ?>
         <p class="error">* メールアドレスを入力してください！</p>
       <?php endif; ?>
@@ -101,7 +105,9 @@ function h($value) {
     </dd>
     <dt>パスワード<span class="required">必須</span></dt>
     <dd>
-      <input type="password" name="password" size="10" maxlength="20" value="<?php echo h(@$_POST['password'], ENT_QUOTES); ?>" />
+      <input type="password" name="password" size="10" maxlength="20" value="<?php if (isset($_POST['password'])) {
+        echo h($_POST['password'], ENT_QUOTES);
+      } ?>" />
       <?php if (isset($error['password']) && $error['password'] == 'blank'): ?>
         <p class="error">* パスワードを入力してください！</p>
       <?php endif; ?>
