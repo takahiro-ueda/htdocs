@@ -131,4 +131,4 @@ function h($value) {
 </main>
 </body>
 </html>
-<?php print('なかなか出来ない') ?>kokokkokokokok
+<?php print('なかなか出来ない') ?>
